@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1088492736293",
+    "project_id": "appdpa-39e6b",
+    "storage_bucket": "appdpa-39e6b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088492736293:android:8a30d250f5a10a47d514cc",
+        "android_client_info": {
+          "package_name": "com.example.dampc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDojmql3S3yumaKZgHckRlcJap_sy2cNoc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,33 @@
+# Gradle
+*.iml
+.gradle/
+/build/
+/captures/
+.externalNativeBuild/
+.cxx/
+
+# Android Studio / IntelliJ
+/.idea/
+*.ipr
+*.iws
+.idea/workspace.xml
+.idea/libraries
+.idea/caches
+.idea/modules.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/deploymentTargetDropDown.xml
+.idea/deploymentTargetSelector.xml
+
+# Local config (ruta del SDK, no se sube)
+local.properties
+
+# Keystores
+*.jks
+*.keystore
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
