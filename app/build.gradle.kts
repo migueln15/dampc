@@ -51,7 +51,7 @@ dependencies {
     // Coil Compose
     implementation("io.coil-kt:coil-compose:2.7.0")
     //Material icons
-    implementation("androidx.compose.material:material-icons-core:1.7.8")
+    implementation("androidx.compose.material:material-icons-extended:1.7.8")
 
     implementation(platform("com.google.firebase:firebase-bom:35.0.0"))
     implementation(libs.firebase.auth)
