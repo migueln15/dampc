@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.dampc.presentation.auth.LoginScreen
 import com.example.dampc.presentation.auth.RegisterScreen
 import com.example.dampc.presentation.jugada.JugadaScreen
+import com.example.dampc.presentation.seguimiento.SeguimientoScreen
 
 @Composable
 fun AppNavGraph(){
@@ -19,6 +20,7 @@ fun AppNavGraph(){
         composable("register") { RegisterScreen(navController) }
         composable("login") { LoginScreen(navController) }
         composable("jugada") { JugadaScreen(navController) }
+        composable("seguimiento") { SeguimientoScreen(navController) }
         /*composable("home") {
             DrawerScaffold(navController) {
                 HomeScreen()

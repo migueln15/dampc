@@ -19,7 +19,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -44,6 +43,7 @@ import com.example.dampc.data.model.RANGO_NUMEROS
 import com.example.dampc.data.model.Sorteo
 import com.example.dampc.data.remote.FirebaseAuthManager
 import com.example.dampc.data.remote.LoteriaRepository
+import com.example.dampc.presentation.components.SorteoCard
 import kotlinx.coroutines.launch
 
 @Composable
@@ -207,7 +207,15 @@ fun JugadaScreen(navController: NavController) {
                     }
                 }
 
-                // TODO: botón para pasar a la pantalla de seguimiento del sorteo
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Button(
+                    enabled = !isSaving,
+                    onClick = { navController.navigate("seguimiento") },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Ver seguimiento del sorteo")
+                }
             }
         }
 
@@ -219,19 +227,6 @@ fun JugadaScreen(navController: NavController) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Volver")
-        }
-    }
-}
-
-@Composable
-private fun SorteoCard(sorteo: Sorteo) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = sorteo.nombre, style = MaterialTheme.typography.titleLarge)
-            if (sorteo.fecha.isNotEmpty()) {
-                Text(text = "Fecha: ${sorteo.fecha}", style = MaterialTheme.typography.bodyMedium)
-            }
-            Text(text = "Estado: ${sorteo.estado.etiqueta}", style = MaterialTheme.typography.bodyMedium)
         }
     }
 }

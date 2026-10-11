@@ -1,5 +1,6 @@
 package com.example.dampc.data.remote
 
+import com.example.dampc.data.model.Bolilla
 import com.example.dampc.data.model.EstadoSorteo
 import com.example.dampc.data.model.Jugada
 import com.example.dampc.data.model.Sorteo
@@ -9,6 +10,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -17,6 +19,7 @@ import java.util.Locale
  * Estructura en Firestore:
  *   sorteos/{sorteoId}                 -> nombre, fecha, estado
  *   sorteos/{sorteoId}/jugadas/{uid}   -> sorteoId, uid, numeros
+ *   sorteos/{sorteoId}/bolillas/{id}   -> numero, orden (1 a 6)
  * Usar el UID como id del documento garantiza una sola jugada por usuario.
  */
 object LoteriaRepository {
@@ -83,6 +86,44 @@ object LoteriaRepository {
             Result.failure(e)
         }
     }
+
+    /*
+     * Escucha en tiempo real. Firestore llama a onChange con los datos actuales y luego
+     * cada vez que el documento cambia. Quien llama debe hacer remove() sobre el
+     * ListenerRegistration devuelto al salir de la pantalla.
+     */
+    fun listenSorteo(
+        sorteoId: String,
+        onChange: (Sorteo?) -> Unit,
+        onError: (Exception) -> Unit
+    ): ListenerRegistration =
+        sorteoRef(sorteoId).addSnapshotListener { snapshot, error ->
+            if (error != null) {
+                onError(error)
+                return@addSnapshotListener
+            }
+            onChange(snapshot?.takeIf { it.exists() }?.toSorteo())
+        }
+
+    fun listenBolillas(
+        sorteoId: String,
+        onChange: (List<Bolilla>) -> Unit,
+        onError: (Exception) -> Unit
+    ): ListenerRegistration =
+        sorteoRef(sorteoId).collection("bolillas")
+            .orderBy("orden")
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    onError(error)
+                    return@addSnapshotListener
+                }
+                val bolillas = snapshot?.documents.orEmpty().mapNotNull { doc ->
+                    val numero = doc.getLong("numero")?.toInt() ?: return@mapNotNull null
+                    val orden = doc.getLong("orden")?.toInt() ?: return@mapNotNull null
+                    Bolilla(numero = numero, orden = orden)
+                }
+                onChange(bolillas)
+            }
 
     private fun DocumentSnapshot.toSorteo(): Sorteo {
         // La fecha puede ingresarse en la consola como timestamp o como texto
