@@ -17,6 +17,9 @@ object FirebaseAuthManager {
     val currentUserEmail: String?
         get() = auth.currentUser?.email
 
+    val currentUserId: String?
+        get() = auth.currentUser?.uid
+
     fun isLoggedIn(): Boolean = auth.currentUser != null
 
     suspend fun registerUser(name: String, email: String, password: String, dob: String, phoneNumber: String): Result<Unit>{

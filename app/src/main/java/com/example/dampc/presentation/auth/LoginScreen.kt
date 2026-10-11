@@ -84,7 +84,14 @@ fun LoginScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // TODO: aquí irá el botón para pasar al registro de jugada del sorteo
+            Button(
+                onClick = { navController.navigate("jugada") },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Registrar jugada")
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedButton(
                 onClick = {
